@@ -1,0 +1,18 @@
+events = require("events");
+sort.prototype = new events.EventEmitter;
+function sort(){
+	var i;
+	i =0;
+	var testvalue = 123;
+	while(i<10){
+		testvalue = Math.sqrt(testvalue);
+		i++;
+	}
+	this.emit("finished", testvalue)
+}
+console.log("Main function")
+mysort = new sort();
+mysort.on("finished", function(testvalue){
+	console.log("sort(): "+testvalue)
+	})
+

@@ -1,0 +1,16 @@
+{
+  "name": "wordtool",
+  "version": "0.0.1",
+  "description": "ERROR: No README.md file found!",
+  "main": "wordtool.js",
+  "dependencies": {
+            "lazylines" : ">0.1.0",
+			"xml2js" : ">0.2.0"
+			},
+  "repository": "",
+  "keywords": [
+    "wordtool"
+  ],
+  "author": "Loyuki",
+  "license": "MIT"
+}

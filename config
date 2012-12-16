@@ -1,0 +1,11 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = true
+	ignorecase = true
+[remote "orgin"]
+	url = https://github.com/wujiaye/wordtool.git
+	fetch = +refs/heads/*:refs/remotes/orgin/*
+[remote "origin"]
+	url = https://github.com/wujiaye/wordtool.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
