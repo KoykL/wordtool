@@ -14,7 +14,7 @@ Options:
   --shuffle-words, -s         Output words into random order.
        [boolean]  [default: false]
 
-  --with-definition, -d       Search Powerdict and append definition after each
+  --with-definition, -d       Search iciba and append definition after each
  word.  [boolean]  [default: false]
 
   --separated-definition, -p  Put definitions into a individual file

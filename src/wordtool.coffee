@@ -20,7 +20,7 @@ argv = optimist
 	.boolean("shuffle-words",)
 	.describe("shuffle-words", "Output words into random order.")
 	.boolean("with-definition")
-	.describe("with-definition", "Search Powerword and append definition after each word.")
+	.describe("with-definition", "Search iciba and append definition after each word.")
 	.boolean("separated-definition")
 	.describe("separated-definition", "Put definitions into a individual file")
 	.boolean("help")
