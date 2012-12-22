@@ -12,7 +12,7 @@ class checkforseparateddefinition
 	toString: ()->
 		'You cannot enable "separated-definition" without enable "with-definition" first.'
 argv = optimist
-	.usage("A handy tool helps you to deal with new words.\nUsage:$0")
+	.usage("A handy tool helps you to deal with new words.\nUsage: $0")
 	.boolean("with-index")
 	.describe("with-index", "Give each word an index number.")
 	.boolean("strip-comments")
