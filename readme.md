@@ -1,14 +1,14 @@
 A *handy* tool helps you to deal with new words.
 ====================================================
 
- `Usage:node C:\Users\Loyuki\Documents\words\wordtool\wordtool
-
- Options:
+Usage:node C:\Users\Loyuki\Documents\words\wordtool\wordtool
+```
+Options:
   --with-index, -i            Give each word an index number.
-       [boolean]  [default: true]
+      [boolean]  [default: true]
 
   --strip-comments, -c        Strip away comments after #.
-       [boolean]  [default: false]
+      [boolean]  [default: false]
 
   --shuffle-words, -s         Output words into random order.
        [boolean]  [default: false]
@@ -29,4 +29,5 @@ A *handy* tool helps you to deal with new words.
        [default: "./"]
 
   --debug, -b                 Enable verbose output
-       [boolean]  [default: false]`
+       [boolean]  [default: false]
+```
