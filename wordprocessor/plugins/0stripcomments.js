@@ -13,18 +13,15 @@
     function processword() {}
 
     processword.prototype.process = function(words, argv) {
-      var each, i, processedwords, _i, _len;
-      if (argv["strip-comments"]) {
+      var processedwords;
+      if (argv["argv"]["strip-comments"]) {
         processedwords = stripcomments(words);
-        for (i = _i = 0, _len = words.length; _i < _len; i = ++_i) {
-          each = words[i];
-          each["name"] = processedwords[i];
-        }
         this.processed = true;
+        return this.emit("end", processedwords);
       } else {
         this.processed = false;
+        return this.emit("end", void 0);
       }
-      return this.emit("end");
     };
 
     processword.prototype.processed = function() {
@@ -36,10 +33,11 @@
   })(events);
 
   stripcomments = function(words) {
-    var each, eachobject, pos, posspace, postab, tmpholder, worddone, wordhaventstrippedblanks, wordsstrippedspace, _i, _len;
+    var each, eachobject, pos, posspace, postab, tmpholder, tmpholder2, worddone, wordhaventstrippedblanks, wordsstrippedspace, _i, _len;
     tmpholder = [];
-    for (_i = 0, _len = words.length; _i < _len; _i++) {
-      eachobject = words[_i];
+    tmpholder2 = words;
+    for (_i = 0, _len = tmpholder2.length; _i < _len; _i++) {
+      eachobject = tmpholder2[_i];
       each = eachobject["name"];
       pos = each.indexOf("#");
       wordhaventstrippedblanks = pos >= 0 ? each.slice(0, pos) : each;
@@ -48,7 +46,8 @@
       postab = wordsstrippedspace.indexOf("\t");
       worddone = postab >= 0 ? wordsstrippedspace.slice(0, postab) : wordsstrippedspace;
       if (worddone.length !== 0) {
-        tmpholder.push(worddone);
+        eachobject["name"] = worddone;
+        tmpholder.push(eachobject);
       }
     }
     return tmpholder;

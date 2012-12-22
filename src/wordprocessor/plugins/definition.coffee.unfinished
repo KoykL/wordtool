@@ -1,0 +1,31 @@
+events= require("events").EventEmitter
+xml = require("xml2js")
+http = require('http')
+stripcomments = require("./stripcomments")
+class processword extends events
+	constructor: ()->
+	process: (words, argv)->
+		if argv["argv"]["with-definition"]
+			if not argv["stripedcomments"]
+				words = stripcomments.stripcomments(words)
+			tmpwords = words
+			parser = new xml.Parser()
+			parser.addListener("end", (result)->
+				console.log(result)
+				)
+			for each in words
+				word = each.name
+				http.get("http://dict-co.iciba.com/api/dictionary.php?w=#{word}", (res)->
+					res.setEncoding("utf8")
+					res.on("data", (data)->
+						parser.parseString(data)
+					)
+				)
+			@processed = true
+			this.emit("end")		
+		else
+			@processed = false
+	processed: ()->
+		return @processed
+exports.processword = processword
+exports.stripcomments = stripcomments

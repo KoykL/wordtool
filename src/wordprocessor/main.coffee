@@ -13,16 +13,22 @@ class wordprocessor extends events
 		that = this
 		#this.emit("end")
 		for plugin in plugins
-			if argv.debug
+			if argv["argv"].debug
 				console.log("Calling plugin #{path.join(__dirname, 'plugins', plugin)}")
 			processword = require("#{path.join(__dirname, 'plugins', plugin)}").processword
 			pr = new processword()
 			#this.emit("end")
-			pr.on("end", ()->
+			pr.on("end", (data)->
+				#if argv["argv"].debug
+					#console.log("data returned on call back:")
+					#console.log(data)
+				if data isnt undefined
+					that.words = data
 				that.scriptcount++
 				that.emit("end") if that.scriptcount is plugins.length
 				)
-			pr.process(@words, argv)
+			tmpwords = @words
+			pr.process(tmpwords, argv)
 			#@words = pr.words
 	getresult: ()->
 		#console.log("reached")

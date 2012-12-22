@@ -22,7 +22,7 @@
     function wordprocessor() {}
 
     wordprocessor.prototype.process = function(wordsinput, argv) {
-      var plugin, plugindir, plugins, pr, processword, that, _i, _len, _results;
+      var plugin, plugindir, plugins, pr, processword, that, tmpwords, _i, _len, _results;
       this.words = wordsinput;
       plugindir = fs.readdirSync("" + __dirname + "/plugins");
       plugins = (function() {
@@ -41,18 +41,22 @@
       _results = [];
       for (_i = 0, _len = plugins.length; _i < _len; _i++) {
         plugin = plugins[_i];
-        if (argv.debug) {
+        if (argv["argv"].debug) {
           console.log("Calling plugin " + (path.join(__dirname, 'plugins', plugin)));
         }
         processword = require("" + (path.join(__dirname, 'plugins', plugin))).processword;
         pr = new processword();
-        pr.on("end", function() {
+        pr.on("end", function(data) {
+          if (data !== void 0) {
+            that.words = data;
+          }
           that.scriptcount++;
           if (that.scriptcount === plugins.length) {
             return that.emit("end");
           }
         });
-        _results.push(pr.process(this.words, argv));
+        tmpwords = this.words;
+        _results.push(pr.process(tmpwords, argv));
       }
       return _results;
     };

@@ -13,18 +13,21 @@
     function processword() {}
 
     processword.prototype.process = function(words, argv) {
-      if (argv["shuffle-words"]) {
+      var tmpwords;
+      tmpwords = words;
+      if (argv["argv"]["shuffle-words"]) {
         Array.prototype.shuffle = function() {
 				for (var j, x, i = this.length; i; j = parseInt(Math.random() * i), x = this[--i], this[i] = this[j], this[j] = x);
 				return this;
 			};;
 
-        words.shuffle();
+        tmpwords.shuffle();
         this.processed = true;
+        return this.emit("end", tmpwords);
       } else {
         this.processed = false;
+        return this.emit("end", void 0);
       }
-      return this.emit("end");
     };
 
     processword.prototype.processed = function() {
