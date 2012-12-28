@@ -2,7 +2,7 @@ optimist = require('./optimist/index')
 path = require("path")
 wordloader = require('./wordloader').wordloader
 wordprocessor = require("./wordprocessor/main").wordprocessor
-outputter = require("./outputter").outputter
+outputter = require("./outputter/outputter").outputter
 class checkforseparateddefinition 
 	call: (arg) ->
 	#console.log(arg)
@@ -59,6 +59,9 @@ argv = optimist
 		alias: "b"
 		default: false
 	)
+	.string("data")
+	.default("data", "data")
+	.describe("data", "Specify where the data file.")
 	.check(new checkforseparateddefinition)
 	.argv
 option = 

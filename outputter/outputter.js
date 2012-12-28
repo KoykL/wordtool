@@ -25,7 +25,7 @@
     function outputter() {}
 
     outputter.prototype.process = function(words, option) {
-      var chineseoutput, chineseoutputfile, each, i, output, outputfile, sum, tmpwords, _i, _j, _len, _len1;
+      var chineseoutput, chineseoutputfile, each, i, myword, mywordchinese, output, outputfile, sum, tmpwords, _i, _j, _len, _len1;
       tmpwords = words;
       chineseoutput = "None";
       if (option["argv"]["shuffle-words"]) {
@@ -44,11 +44,8 @@
           each["index"] = i;
         }
       }
-      fs.writeFileSync(output, "");
-      if (option["argv"]["separated-definition"]) {
-        fs.writeFileSync("" + chineseoutput, "");
-        chineseoutput = "" + chineseoutput;
-      }
+      myword = "";
+      mywordchinese = "";
       for (_j = 0, _len1 = tmpwords.length; _j < _len1; _j++) {
         each = tmpwords[_j];
         sum = "";
@@ -62,15 +59,17 @@
           sum += " ";
           sum += each["definition"];
         }
-        fs.appendFileSync(output, "" + sum + (getPlatformEOL()));
+        myword += "" + sum + (getPlatformEOL());
         if (option["argv"]["separated-definition"]) {
           if (option["argv"]["with-index"]) {
-            fs.appendFileSync(chineseoutput, "" + each.index + ": " + each.definition + (getPlatformEOL()));
+            mywordchinese += "" + each.index + ": " + each.definition + (getPlatformEOL());
           } else {
-            fs.appendFileSync(chineseoutput, "" + each.definition + (getPlatformEOL()));
+            mywordchinese += "" + each.definition + (getPlatformEOL());
           }
         }
       }
+      fs.writeFileSync(output, myword);
+      fs.writeFileSync(chineseoutput, mywordchinese);
       return this.emit("end", "" + output + " " + chineseoutput);
     };
 

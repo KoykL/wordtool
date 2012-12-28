@@ -10,7 +10,7 @@
 
   wordprocessor = require("./wordprocessor/main").wordprocessor;
 
-  outputter = require("./outputter").outputter;
+  outputter = require("./outputter/outputter").outputter;
 
   checkforseparateddefinition = (function() {
 
@@ -50,7 +50,7 @@
   }).option("debug", {
     alias: "b",
     "default": false
-  }).check(new checkforseparateddefinition).argv;
+  }).string("data")["default"]("data", "data").describe("data", "Specify where the data file.").check(new checkforseparateddefinition).argv;
 
   option = {
     argv: argv
