@@ -19,7 +19,7 @@
     function processword() {}
 
     processword.prototype.process = function(words, argv) {
-      var counter, each, parser, referencetable, that, tmpwords, word, _i, _len;
+      var counter, each, options, parser, referencetable, that, tmpwords, word, _i, _len;
       if (argv["argv"]["with-definition"]) {
         if (!argv["stripedcomments"]) {
           words = stripcomments.stripcomments(words);
@@ -53,7 +53,12 @@
         for (_i = 0, _len = words.length; _i < _len; _i++) {
           each = words[_i];
           word = each.name;
-          http.get("http://dict-co.iciba.com/api/dictionary.php?w=" + word, function(res) {
+          options = {
+            host: 'dict-co.iciba.com',
+            port: 80,
+            path: "/api/dictionary.php?w=" + word
+          };
+          http.get(options, function(res) {
             res.setEncoding("utf8");
             return res.on("data", function(data) {
               return parser.parseString(data);
