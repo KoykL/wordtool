@@ -2,7 +2,7 @@ A *handy* tool helps you to deal with new words.
 ====================================================
 
 ```
-Usage: node C:\Users\Loyuki\Documents\words\wordtool\wordtool
+Usage: node wordtool.js
 
 Options:
   --with-index, -i            Give each word an index number.
