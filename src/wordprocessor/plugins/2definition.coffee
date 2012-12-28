@@ -34,7 +34,12 @@ class processword extends events
 				)
 			for each in words
 				word = each.name
-				http.get("http://dict-co.iciba.com/api/dictionary.php?w=#{word}", (res)->
+				options =
+						host: 'dict-co.iciba.com',
+						port: 80,
+						path: "/api/dictionary.php?w=#{word}"
+						
+				http.get(options, (res)->
 					res.setEncoding("utf8")
 					res.on("data", (data)->
 						parser.parseString(data)

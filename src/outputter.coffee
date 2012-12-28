@@ -25,12 +25,15 @@ class outputter extends events
 			for each, i in tmpwords
 				each["index"] = i
 		#(dirty hack!!) giving words their index
-		fs.writeFileSync(output, "") 
+#		fs.writeFileSync(output, "") 
 		#in case when file doesnt exist
-		if option["argv"]["separated-definition"]
-			fs.writeFileSync("#{chineseoutput}", "")  
-			chineseoutput = "#{chineseoutput}"
+#		if option["argv"]["separated-definition"]
+#			fs.writeFileSync("#{chineseoutput}", "")  
+#			chineseoutput = "#{chineseoutput}"
 		#in case when the chinese file doesnt exist
+		myword = ""
+		mywordchinese = ""
+		#for storing words(substituting FileappendSync£©
 		for each in tmpwords
 			sum = ""
 			if each["index"] isnt undefined
@@ -43,14 +46,16 @@ class outputter extends events
 			if each["definition"] && not option["argv"]["separated-definition"]
 				sum += " " #add indentation
 				sum += each["definition"]
-			fs.appendFileSync(output, "#{sum}#{getPlatformEOL()}")
-			#Really write out
+			myword += "#{sum}#{getPlatformEOL()}"
+			#append for waiting to write out
 			if option["argv"]["separated-definition"]
 				if option["argv"]["with-index"]
-					fs.appendFileSync(chineseoutput, "#{each.index}: #{each.definition}#{getPlatformEOL()}")
+					mywordchinese += "#{each.index}: #{each.definition}#{getPlatformEOL()}"
 				else
-					fs.appendFileSync(chineseoutput, "#{each.definition}#{getPlatformEOL()}")
-			#Writing out chinese definition. Quite Simple. Do not need to explain.
+					mywordchinese += "#{each.definition}#{getPlatformEOL()}"
+			#append words waiting for Writing out chinese definition. Quite Simple. Do not need to explain.
+		fs.writeFileSync(output, myword) 
+		fs.writeFileSync(chineseoutput, mywordchinese)  
 		this.emit("end", "#{output} #{chineseoutput}")
 		#The file that I've written into.
 exports.outputter	= outputter
