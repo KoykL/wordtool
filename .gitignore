@@ -163,5 +163,5 @@ pip-log.txt
 .DS_Store
 
 # node js
-
+*.txt
 node_modules

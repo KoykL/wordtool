@@ -32,9 +32,9 @@
 
   })();
 
-  argv = optimist.usage("A handy tool helps you to deal with new words.\nUsage: $0").boolean("with-index").describe("with-index", "Give each word an index number.").boolean("strip-comments").describe("strip-comments", "Strip away comments after #.").boolean("shuffle-words").describe("shuffle-words", "Output words into random order.").boolean("with-definition").describe("with-definition", "Search iciba and append definition after each word.").boolean("separated-definition").describe("separated-definition", "Put definitions into a individual file").boolean("help").alias("help", "h")["default"]("help", false).describe("help", "Print out this help.").alias("outputdir", "o")["default"]("outputdir", "").describe("outputdir", "Specify the output directory.").alias("inputdir", "e")["default"]("inputdir", "./").describe("inputdir", "Specify where to search for input file.").boolean("debug").describe("debug", "Enable verbose output").option("with-index", {
+  argv = optimist.usage("A handy tool helps you to deal with new words.\nUsage: $0 [Options]\nUse --no-[key] to disable an option.").boolean("with-index").describe("with-index", "Give each word an index number.").boolean("strip-comments").describe("strip-comments", "Strip away comments after #.").boolean("shuffle-words").describe("shuffle-words", "Output words into random order.").boolean("with-definition").describe("with-definition", "Search iciba and append definition after each word.").boolean("separated-definition").describe("separated-definition", "Put definitions into a individual file").boolean("help").alias("help", "h")["default"]("help", false).describe("help", "Print out this help.").alias("outputdir", "o")["default"]("outputdir", "").describe("outputdir", "Specify the output directory.").alias("inputdir", "e")["default"]("inputdir", "./").describe("inputdir", "Specify where to search for input file.").boolean("debug").describe("debug", "Enable verbose output").option("with-index", {
     alias: "i",
-    "default": false
+    "default": true
   }).option("strip-comments", {
     alias: "c",
     "default": false
