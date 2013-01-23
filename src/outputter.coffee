@@ -22,10 +22,10 @@ class outputter extends events
 			chineseoutput = path.join(option["argv"]["outputdir"], chineseoutputfile)
 		#giving separated chinese output its name
 		if option["argv"]["with-index"]
-			console.log("-------------------------------------------")
+			#console.log("-------------------------------------------")
 			for each, i in tmpwords
 				each["index"] = i
-			console.log(tmpwords)
+			#console.log(tmpwords)
 		#(dirty hack!!) giving words their index
 #		fs.writeFileSync(output, "") 
 		#in case when file doesnt exist

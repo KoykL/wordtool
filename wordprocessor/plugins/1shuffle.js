@@ -22,6 +22,7 @@
 			};;
 
         tmpwords.shuffle();
+        console.log(tmpwords);
         this.processed = true;
         return this.emit("end", tmpwords);
       } else {

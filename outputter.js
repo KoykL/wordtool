@@ -39,12 +39,10 @@
         chineseoutput = path.join(option["argv"]["outputdir"], chineseoutputfile);
       }
       if (option["argv"]["with-index"]) {
-        console.log("-------------------------------------------");
         for (i = _i = 0, _len = tmpwords.length; _i < _len; i = ++_i) {
           each = tmpwords[i];
           each["index"] = i;
         }
-        console.log(tmpwords);
       }
       myword = "";
       mywordchinese = "";

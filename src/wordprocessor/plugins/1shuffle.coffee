@@ -11,6 +11,7 @@ class processword extends events
 				return this;
 			};`
 			tmpwords.shuffle()
+			console.log(tmpwords)
 			#console.log("Now I emit")
 			#@words = words
 			@processed = true
