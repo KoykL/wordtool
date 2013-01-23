@@ -3,6 +3,7 @@ path = require("path")
 wordloader = require('./wordloader').wordloader
 wordprocessor = require("./wordprocessor/main").wordprocessor
 outputter = require("./outputter").outputter
+fs = require("fs")
 class checkforseparateddefinition 
 	call: (arg) ->
 	#console.log(arg)
@@ -12,7 +13,7 @@ class checkforseparateddefinition
 	toString: ()->
 		'You cannot enable "separated-definition" without enable "with-definition" first.'
 argv = optimist
-	.usage("A handy tool helps you to deal with new words.\nUsage: $0 [Options]\nUse --no-[key] to disable an option.")
+	.usage("A handy tool helps you to deal with new words.\nUsage: $0\nYou can use --no-[option] to diable an option if it is enabled by default.\n")
 	.boolean("with-index")
 	.describe("with-index", "Give each word an index number.")
 	.boolean("strip-comments")
@@ -23,6 +24,12 @@ argv = optimist
 	.describe("with-definition", "Search iciba and append definition after each word.")
 	.boolean("separated-definition")
 	.describe("separated-definition", "Put definitions into a individual file")
+	.option("avoid-redundancy",
+		alias: "r"
+		default: true
+	)
+	.describe("avoid-redundancy", "Strip away redundant words")
+	.boolean("avoid-redundancy")
 	.boolean("help")
 	.alias("help", "h")
 	.default("help", false)
@@ -33,6 +40,10 @@ argv = optimist
 	.alias("inputdir", "e")
 	.default("inputdir", "./")
 	.describe("inputdir", "Specify where to search for input file.")
+	.option("debug",
+		alias: "b"
+		default: false
+	)
 	.boolean("debug")
 	.describe("debug", "Enable verbose output")
 	.option("with-index",
@@ -55,10 +66,11 @@ argv = optimist
 			alias: "p"
 			default: false
 			)
-	.option("debug",
-		alias: "b"
-		default: false
-	)
+
+
+	.string("data")
+	.default("data", "data")
+	.describe("data", "Specify where the data file.")
 	.check(new checkforseparateddefinition)
 	.argv
 option = 
@@ -92,8 +104,11 @@ mp.on("end", (data) ->
 	wp = new wordprocessor()
 	wp.on("end", ()->
 		if argv.debug
+			console.log("raw: ")
+			console.log(words)
 			console.log("Word processor result:")
 			console.log(wp.getresult())
+			fs.writeFileSync("debug-data", JSON.stringify(wp.getresult()), "utf8")
 		output = new outputter()
 		output.on("end", (x)->
 			console.log(x)

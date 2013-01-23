@@ -10,7 +10,7 @@ class outputter extends events
 		#return @words
 	process: (words, option)->
 		tmpwords = words
-		chineseoutput = "None"
+		chineseoutput = undefined
 		if option["argv"]["shuffle-words"]
 			outputfile =  "s#{option['inputfile']}"
 		else 
@@ -22,8 +22,10 @@ class outputter extends events
 			chineseoutput = path.join(option["argv"]["outputdir"], chineseoutputfile)
 		#giving separated chinese output its name
 		if option["argv"]["with-index"]
+			console.log("-------------------------------------------")
 			for each, i in tmpwords
 				each["index"] = i
+			console.log(tmpwords)
 		#(dirty hack!!) giving words their index
 #		fs.writeFileSync(output, "") 
 		#in case when file doesnt exist
@@ -54,8 +56,11 @@ class outputter extends events
 				else
 					mywordchinese += "#{each.definition}#{getPlatformEOL()}"
 			#append words waiting for Writing out chinese definition. Quite Simple. Do not need to explain.
-		fs.writeFileSync(output, myword) 
-		fs.writeFileSync(chineseoutput, mywordchinese)  
+		fs.writeFileSync(output, myword)
+		if chineseoutput
+			fs.writeFileSync(chineseoutput, mywordchinese)
+		else
+			chineseoutput = "None"
 		this.emit("end", "#{output} #{chineseoutput}")
 		#The file that I've written into.
 exports.outputter	= outputter
