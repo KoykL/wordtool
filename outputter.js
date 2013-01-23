@@ -27,7 +27,7 @@
     outputter.prototype.process = function(words, option) {
       var chineseoutput, chineseoutputfile, each, i, myword, mywordchinese, output, outputfile, sum, tmpwords, _i, _j, _len, _len1;
       tmpwords = words;
-      chineseoutput = "None";
+      chineseoutput = void 0;
       if (option["argv"]["shuffle-words"]) {
         outputfile = "s" + option['inputfile'];
       } else {
@@ -39,10 +39,12 @@
         chineseoutput = path.join(option["argv"]["outputdir"], chineseoutputfile);
       }
       if (option["argv"]["with-index"]) {
+        console.log("-------------------------------------------");
         for (i = _i = 0, _len = tmpwords.length; _i < _len; i = ++_i) {
           each = tmpwords[i];
           each["index"] = i;
         }
+        console.log(tmpwords);
       }
       myword = "";
       mywordchinese = "";
@@ -69,7 +71,11 @@
         }
       }
       fs.writeFileSync(output, myword);
-      fs.writeFileSync(chineseoutput, mywordchinese);
+      if (chineseoutput) {
+        fs.writeFileSync(chineseoutput, mywordchinese);
+      } else {
+        chineseoutput = "None";
+      }
       return this.emit("end", "" + output + " " + chineseoutput);
     };
 
