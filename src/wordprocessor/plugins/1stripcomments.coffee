@@ -35,12 +35,14 @@ stripcomments = (words) ->
 		each = eachobject["name"]
 		pos = each.indexOf("#")
 		wordhaventstrippedblanks = if pos >= 0 then each.slice(0, pos) else each
-		posspace = wordhaventstrippedblanks.indexOf(" ")
-		wordsstrippedspace = if posspace >= 0 then wordhaventstrippedblanks.slice(0, posspace) else wordhaventstrippedblanks
-		postab = wordsstrippedspace.indexOf("\t")
-		worddone = if postab >= 0 then wordsstrippedspace.slice(0, postab) else wordsstrippedspace
-		if worddone.length isnt 0
-			eachobject["name"] = worddone
+		reg = /[^ \t].*[^ \t]/g
+		#posspace = wordhaventstrippedblanks.indexOf(" ")
+		#wordsstrippedspace = if posspace >= 0 then wordhaventstrippedblanks.slice(0, posspace) else wordhaventstrippedblanks
+		#postab = wordsstrippedspace.indexOf("\t")
+		#worddone = if postab >= 0 then wordsstrippedspace.slice(0, postab) else wordsstrippedspace
+		worddone = wordhaventstrippedblanks.match(reg)
+		if worddone and worddone.length isnt 0
+			eachobject["name"] = worddone[0]
 			tmpholder.push(eachobject)
 			#console.log(eachobject)
 	return tmpholder

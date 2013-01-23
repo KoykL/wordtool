@@ -33,7 +33,7 @@
   })(events);
 
   stripcomments = function(words) {
-    var each, eachobject, pos, posspace, postab, tmpholder, tmpholder2, worddone, wordhaventstrippedblanks, wordsstrippedspace, _i, _len;
+    var each, eachobject, pos, reg, tmpholder, tmpholder2, worddone, wordhaventstrippedblanks, _i, _len;
     tmpholder = [];
     tmpholder2 = words;
     for (_i = 0, _len = tmpholder2.length; _i < _len; _i++) {
@@ -41,12 +41,10 @@
       each = eachobject["name"];
       pos = each.indexOf("#");
       wordhaventstrippedblanks = pos >= 0 ? each.slice(0, pos) : each;
-      posspace = wordhaventstrippedblanks.indexOf(" ");
-      wordsstrippedspace = posspace >= 0 ? wordhaventstrippedblanks.slice(0, posspace) : wordhaventstrippedblanks;
-      postab = wordsstrippedspace.indexOf("\t");
-      worddone = postab >= 0 ? wordsstrippedspace.slice(0, postab) : wordsstrippedspace;
-      if (worddone.length !== 0) {
-        eachobject["name"] = worddone;
+      reg = /[^ \t].*[^ \t]/g;
+      worddone = wordhaventstrippedblanks.match(reg);
+      if (worddone && worddone.length !== 0) {
+        eachobject["name"] = worddone[0];
         tmpholder.push(eachobject);
       }
     }

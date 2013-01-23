@@ -10,7 +10,7 @@
 
   http = require('http');
 
-  stripcomments = require("./0stripcomments");
+  stripcomments = require("./1stripcomments");
 
   processword = (function(_super) {
 
@@ -18,19 +18,20 @@
 
     function processword() {}
 
-    processword.prototype.process = function(words, argv) {
-      var counter, each, options, parser, referencetable, that, tmpwords, word, _i, _len;
+    processword.prototype.process = function(iwords, argv) {
+      var counter, each, options, parser, referencetable, that, tmpwords, word, words, words2, _i, _len;
       if (argv["argv"]["with-definition"]) {
         if (!argv["stripedcomments"]) {
-          words = stripcomments.stripcomments(words);
+          words = stripcomments.stripcomments(iwords);
         }
         referencetable = flattern(words);
+        words2 = iwords;
         tmpwords = [];
         counter = 0;
         that = this;
         parser = new xml.Parser();
         parser.on("end", function(result) {
-          var definition, each, key, object, sum, _i, _len;
+          var definition, each, key, object, sum, _i, _j, _len, _len1;
           sum = "";
           definition = result["dict"]["acceptation"];
           if (definition !== void 0) {
@@ -44,9 +45,13 @@
           key = result["dict"]["key"][0];
           object = referencetable[key];
           object["definition"] = sum;
-          tmpwords.push(object);
           counter++;
           if (counter === words.length) {
+            for (_j = 0, _len1 = words2.length; _j < _len1; _j++) {
+              each = words2[_j];
+              each["definition"] = referencetable[each["name"]]["definition"];
+              tmpwords.push(each);
+            }
             return that.emit("end", tmpwords);
           }
         });

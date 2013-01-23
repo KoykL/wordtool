@@ -21,7 +21,7 @@ class wordprocessor extends events
 			pr.on("end", (data)->
 				#if argv["argv"].debug
 					#console.log("data returned on call back:")
-					#console.log(data)
+				#console.log(data)
 				if data isnt undefined
 					that.words = data
 				that.scriptcount++

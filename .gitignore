@@ -165,3 +165,10 @@ pip-log.txt
 # node js
 
 node_modules
+
+#Misc
+*.txt
+debug-data
+
+#temp
+quiz

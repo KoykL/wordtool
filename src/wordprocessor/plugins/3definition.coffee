@@ -1,14 +1,15 @@
 events= require("events").EventEmitter
 xml = require("xml2js")
 http = require('http')
-stripcomments = require("./0stripcomments")
+stripcomments = require("./1stripcomments")
 class processword extends events
 	constructor: ()->
-	process: (words, argv)->
+	process: (iwords, argv)->
 		if argv["argv"]["with-definition"]
 			if not argv["stripedcomments"]
-				words = stripcomments.stripcomments(words)
+				words = stripcomments.stripcomments(iwords)
 			referencetable = flattern(words)
+			words2 = iwords
 			#console.log(words)
 			tmpwords = []
 			counter = 0
@@ -25,10 +26,12 @@ class processword extends events
 				key = result["dict"]["key"][0]
 				object = referencetable[key]
 				object["definition"] = sum
-				tmpwords.push(object)
 				counter++
 				#console.log(words.length)
 				if counter is words.length
+					for each in words2
+						each["definition"] = referencetable[each["name"]]["definition"]
+						tmpwords.push(each)
 					that.emit("end", tmpwords)
 				#console.log(object)
 				)
