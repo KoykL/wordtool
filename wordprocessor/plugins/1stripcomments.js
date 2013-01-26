@@ -13,9 +13,10 @@
     function processword() {}
 
     processword.prototype.process = function(words, argv) {
-      var processedwords;
+      var processedwords, tmpwords;
+      tmpwords = words;
       if (argv["argv"]["strip-comments"]) {
-        processedwords = stripcomments(words);
+        processedwords = stripcomments(tmpwords);
         this.processed = true;
         return this.emit("end", processedwords);
       } else {
@@ -41,10 +42,10 @@
       each = eachobject["name"];
       pos = each.indexOf("#");
       wordhaventstrippedblanks = pos >= 0 ? each.slice(0, pos) : each;
-      reg = /[^ \t].*[^ \t]/g;
-      worddone = wordhaventstrippedblanks.match(reg);
+      reg = /^\s*|\s*$/g;
+      worddone = wordhaventstrippedblanks.replace(reg, "");
       if (worddone && worddone.length !== 0) {
-        eachobject["name"] = worddone[0];
+        eachobject["name"] = worddone;
         tmpholder.push(eachobject);
       }
     }

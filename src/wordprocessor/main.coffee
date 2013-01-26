@@ -23,11 +23,15 @@ class wordprocessor extends events
 					#console.log("data returned on call back:")
 				#console.log(data)
 				if data isnt undefined
+					#console.log("returned")
+					
 					that.words = data
+					console.log(data)
 				that.scriptcount++
 				that.emit("end") if that.scriptcount is plugins.length
 				)
 			tmpwords = @words
+			#console.log(words)
 			pr.process(tmpwords, argv)
 			#@words = pr.words
 	getresult: ()->

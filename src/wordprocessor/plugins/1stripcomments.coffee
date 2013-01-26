@@ -4,6 +4,9 @@ class processword extends events
 	#getresult: ()->
 		#return @words
 	process: (words, argv)->
+		tmpwords = words
+		#console.log("inside")
+		#console.log(words)
 		if argv["argv"]["strip-comments"]
 			#@words = words
 			#processedwords = stripcomments(@words)
@@ -13,7 +16,7 @@ class processword extends events
 				#console.log("Strip comments: words:")
 				#console.log(words)
 			#console.log("Now I emit")
-			processedwords = stripcomments(words)
+			processedwords = stripcomments(tmpwords)
 			#words.splice(0)
 			#for each in processedwords
 			#	words.push(each)
@@ -35,14 +38,14 @@ stripcomments = (words) ->
 		each = eachobject["name"]
 		pos = each.indexOf("#")
 		wordhaventstrippedblanks = if pos >= 0 then each.slice(0, pos) else each
-		reg = /[^ \t].*[^ \t]/g
+		reg = /^\s*|\s*$/g
 		#posspace = wordhaventstrippedblanks.indexOf(" ")
 		#wordsstrippedspace = if posspace >= 0 then wordhaventstrippedblanks.slice(0, posspace) else wordhaventstrippedblanks
 		#postab = wordsstrippedspace.indexOf("\t")
 		#worddone = if postab >= 0 then wordsstrippedspace.slice(0, postab) else wordsstrippedspace
-		worddone = wordhaventstrippedblanks.match(reg)
+		worddone = wordhaventstrippedblanks.replace(reg, "")
 		if worddone and worddone.length isnt 0
-			eachobject["name"] = worddone[0]
+			eachobject["name"] = worddone
 			tmpholder.push(eachobject)
 			#console.log(eachobject)
 	return tmpholder

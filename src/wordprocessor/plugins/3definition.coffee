@@ -21,7 +21,7 @@ class processword extends events
 				definition = result["dict"]["acceptation"]
 				if definition isnt undefined
 					for each in definition
-						sum += each.match(/[^\n].*[^\n]/)
+						sum += each.replace(/^\s*|\s*$/g, "")
 				else sum += "Unknown"
 				key = result["dict"]["key"][0]
 				object = referencetable[key]

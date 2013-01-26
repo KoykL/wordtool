@@ -37,7 +37,7 @@
           if (definition !== void 0) {
             for (_i = 0, _len = definition.length; _i < _len; _i++) {
               each = definition[_i];
-              sum += each.match(/[^\n].*[^\n]/);
+              sum += each.replace(/^\s*|\s*$/g, "");
             }
           } else {
             sum += "Unknown";
