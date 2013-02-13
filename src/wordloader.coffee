@@ -18,15 +18,12 @@ class wordloader extends events.EventEmitter
 									fd: null
 									mode: 666
 									bufferSize: 64 * 1024) 
+			makecallback = (count)->
+				return (data) -> 
+					tmpholder[count].push(ll.chomp(data))
 			inp = new ll.LineReadStream(fd, "utf8")
 			tmpholder[count] = new Array()
-			callbackfunction = undefined
-			eval("""callbackfunction = function (data){
-					tmpholder[#{count}].push(ll.chomp(data))
-					/*console.log(data)*/
-					}
-				""")	
-			inp.on("line", callbackfunction)
+			inp.on("line", makecallback(count))
 			count++
 			inp.on("end", ()->
 						if that.endcount >= files.length - 1

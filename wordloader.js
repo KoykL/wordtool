@@ -17,7 +17,7 @@
     __extends(wordloader, _super);
 
     function wordloader(wordpath, files) {
-      var callbackfunction, count, fd, file, inp, that, tmpholder, _i, _len;
+      var count, fd, file, inp, makecallback, that, tmpholder, _i, _len;
       this.texts = [];
       count = 0;
       this.endcount = 0;
@@ -32,11 +32,14 @@
           mode: 666,
           bufferSize: 64 * 1024
         });
+        makecallback = function(count) {
+          return function(data) {
+            return tmpholder[count].push(ll.chomp(data));
+          };
+        };
         inp = new ll.LineReadStream(fd, "utf8");
         tmpholder[count] = new Array();
-        callbackfunction = void 0;
-        eval("callbackfunction = function (data){\ntmpholder[" + count + "].push(ll.chomp(data))\n/*console.log(data)*/\n}");
-        inp.on("line", callbackfunction);
+        inp.on("line", makecallback(count));
         count++;
         inp.on("end", function() {
           var tmp, word, _j, _k, _len1, _len2;
