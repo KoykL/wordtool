@@ -22,7 +22,7 @@ class processword extends events
 				pos = result["dict"]["pos"]
 				if definition isnt undefined
 					for each, i in definition
-						sum += pos[i].replace(/^\s*|\s*$/g, "")
+						sum += pos[i][_].replace(/^\s*|\s*$/g, "")
 						sum += each.replace(/^\s*|\s*$/g, "")
 				else sum = "Unknown"
 				key = result["dict"]["key"][0]
