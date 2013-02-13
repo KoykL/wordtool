@@ -19,7 +19,7 @@
     function processword() {}
 
     processword.prototype.process = function(iwords, argv) {
-      var counter, each, options, parser, referencetable, that, tmpwords, word, words, words2, _i, _len;
+      var counter, each, options, parser, parsercb, referencetable, that, tmpwords, word, words, words2, _i, _len;
       if (argv["argv"]["with-definition"]) {
         if (!argv["stripedcomments"]) {
           words = stripcomments.stripcomments(iwords);
@@ -30,8 +30,11 @@
         counter = 0;
         that = this;
         parser = new xml.Parser();
-        parser.on("end", function(result) {
+        parsercb = function(result, err) {
           var definition, each, key, object, sum, _i, _j, _len, _len1;
+          if (err) {
+            throw err;
+          }
           sum = "";
           definition = result["dict"]["acceptation"];
           if (definition !== void 0) {
@@ -54,7 +57,7 @@
             }
             return that.emit("end", tmpwords);
           }
-        });
+        };
         for (_i = 0, _len = words.length; _i < _len; _i++) {
           each = words[_i];
           word = each.name;
@@ -66,7 +69,7 @@
           http.get(options, function(res) {
             res.setEncoding("utf8");
             return res.on("data", function(data) {
-              return parser.parseString(data);
+              return parser.parseString(data, parsercb);
             });
           });
         }

@@ -15,7 +15,9 @@ class processword extends events
 			counter = 0
 			that = this
 			parser = new xml.Parser()
-			parser.on("end", (result)->
+			parsercb = (result, err)->
+				if err
+					throw err
 				sum = ""
 				#console.log(result)
 				definition = result["dict"]["acceptation"]
@@ -34,7 +36,6 @@ class processword extends events
 						tmpwords.push(each)
 					that.emit("end", tmpwords)
 				#console.log(object)
-				)
 			for each in words
 				word = each.name
 				options =
@@ -45,7 +46,7 @@ class processword extends events
 				http.get(options, (res)->
 					res.setEncoding("utf8")
 					res.on("data", (data)->
-						parser.parseString(data)
+						parser.parseString(data, parsercb)
 					)
 				)
 			@processed = true	
