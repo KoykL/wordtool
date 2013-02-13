@@ -35,7 +35,7 @@ argv = optimist
 	.default("help", false)
 	.describe("help", "Print out this help.")
 	.alias("outputdir", "o")
-	.default("outputdir", "")
+	.default("outputdir", "./")
 	.describe("outputdir", "Specify the output directory.")
 	.alias("inputdir", "e")
 	.default("inputdir", "./")
@@ -109,6 +109,8 @@ mp.on("end", (data) ->
 			console.log("Word processor result:")
 			console.log(wp.getresult())
 			fs.writeFileSync("debug-data", JSON.stringify(wp.getresult()), "utf8")
+		if option["argv"]["outputdir"] == "./"
+			option["argv"]["outputdir"] = option["argv"]["inputdir"]
 		output = new outputter()
 		output.on("end", (x)->
 			console.log(x)
