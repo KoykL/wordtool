@@ -37,7 +37,7 @@
   argv = optimist.usage("A handy tool helps you to deal with new words.\nUsage: $0\nYou can use --no-[option] to diable an option if it is enabled by default.\n").boolean("with-index").describe("with-index", "Give each word an index number.").boolean("strip-comments").describe("strip-comments", "Strip away comments after #.").boolean("shuffle-words").describe("shuffle-words", "Output words into random order.").boolean("with-definition").describe("with-definition", "Search iciba and append definition after each word.").boolean("separated-definition").describe("separated-definition", "Put definitions into a individual file").option("avoid-redundancy", {
     alias: "r",
     "default": true
-  }).describe("avoid-redundancy", "Strip away redundant words").boolean("avoid-redundancy").boolean("help").alias("help", "h")["default"]("help", false).describe("help", "Print out this help.").alias("outputdir", "o")["default"]("outputdir", "").describe("outputdir", "Specify the output directory.").alias("inputdir", "e")["default"]("inputdir", "./").describe("inputdir", "Specify where to search for input file.").option("debug", {
+  }).describe("avoid-redundancy", "Strip away redundant words").boolean("avoid-redundancy").boolean("help").alias("help", "h")["default"]("help", false).describe("help", "Print out this help.").alias("outputdir", "o")["default"]("outputdir", "./").describe("outputdir", "Specify the output directory. This defaults to inputdir when not being specified.").alias("inputdir", "e")["default"]("inputdir", "./").describe("inputdir", "Specify where to search for input file.").option("debug", {
     alias: "b",
     "default": false
   }).boolean("debug").describe("debug", "Enable verbose output").option("with-index", {
@@ -110,6 +110,9 @@
         console.log("Word processor result:");
         console.log(wp.getresult());
         fs.writeFileSync("debug-data", JSON.stringify(wp.getresult()), "utf8");
+      }
+      if (option["argv"]["outputdir"] === "./") {
+        option["argv"]["outputdir"] = option["argv"]["inputdir"];
       }
       output = new outputter();
       output.on("end", function(x) {
