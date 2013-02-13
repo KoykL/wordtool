@@ -26,7 +26,7 @@ class wordprocessor extends events
 					#console.log("returned")
 					
 					that.words = data
-					console.log(data)
+					#console.log(data)
 				that.scriptcount++
 				that.emit("end") if that.scriptcount is plugins.length
 				)

@@ -83,7 +83,7 @@
     }
   }
 
-  option["inputfile"] = "" + argv._ + ".txt";
+  option["inputfile"] = "" + (argv._.join()) + ".txt";
 
   inputdir = argv.inputdir;
 

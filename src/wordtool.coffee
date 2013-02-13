@@ -89,7 +89,7 @@ for file in argv._
 		filewithext.push("#{startfile}.txt")
 		startfile++
 	#console.log(filewithext)
-option["inputfile"] =  "#{argv._}.txt"
+option["inputfile"] =  "#{argv._.join()}.txt"
 inputdir = argv.inputdir
 inputdir += "/"
 inputdir = path.normalize(inputdir)

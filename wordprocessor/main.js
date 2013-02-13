@@ -49,7 +49,6 @@
         pr.on("end", function(data) {
           if (data !== void 0) {
             that.words = data;
-            console.log(data);
           }
           that.scriptcount++;
           if (that.scriptcount === plugins.length) {
