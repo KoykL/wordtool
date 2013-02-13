@@ -38,7 +38,7 @@
           if (definition !== void 0) {
             for (i = _i = 0, _len = definition.length; _i < _len; i = ++_i) {
               each = definition[i];
-              if (pos[i] !== [{}]) {
+              if (typeof pos[i] === "string") {
                 sum += pos[i].replace(/^\s*|\s*$/g, "");
               }
               sum += each.replace(/^\s*|\s*$/g, "");
