@@ -31,16 +31,18 @@
         that = this;
         parser = new xml.Parser();
         parser.on("end", function(result) {
-          var definition, each, key, object, sum, _i, _j, _len, _len1;
+          var definition, each, i, key, object, pos, sum, _i, _j, _len, _len1;
           sum = "";
           definition = result["dict"]["acceptation"];
+          pos = result["dict"]["pos"];
           if (definition !== void 0) {
-            for (_i = 0, _len = definition.length; _i < _len; _i++) {
-              each = definition[_i];
+            for (i = _i = 0, _len = definition.length; _i < _len; i = ++_i) {
+              each = definition[i];
+              sum += pos[i].replace(/^\s*|\s*$/g, "");
               sum += each.replace(/^\s*|\s*$/g, "");
             }
           } else {
-            sum += "Unknown";
+            sum = "Unknown";
           }
           key = result["dict"]["key"][0];
           object = referencetable[key];

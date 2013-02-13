@@ -19,10 +19,12 @@ class processword extends events
 				sum = ""
 				#console.log(result)
 				definition = result["dict"]["acceptation"]
+				pos = result["dict"]["pos"]
 				if definition isnt undefined
-					for each in definition
+					for each, i in definition
+						sum += pos[i].replace(/^\s*|\s*$/g, "")
 						sum += each.replace(/^\s*|\s*$/g, "")
-				else sum += "Unknown"
+				else sum = "Unknown"
 				key = result["dict"]["key"][0]
 				object = referencetable[key]
 				object["definition"] = sum
