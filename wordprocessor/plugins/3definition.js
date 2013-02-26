@@ -19,10 +19,14 @@
     function processword() {}
 
     processword.prototype.process = function(iwords, argv) {
-      var counter, each, options, parser, referencetable, that, tmpwords, word, words, words2, _i, _len;
+      var counter, each, i, options, parser, referencetable, that, tmpwords, word, words, words2, _i, _j, _len, _len1;
       if (argv["argv"]["with-definition"]) {
         if (!argv["stripedcomments"]) {
           words = stripcomments.stripcomments(iwords);
+        }
+        for (i = _i = 0, _len = words.length; _i < _len; i = ++_i) {
+          each = words[i];
+          words[i]["name"] = each["name"].toLocaleLowerCase();
         }
         referencetable = flattern(words);
         words2 = iwords;
@@ -31,12 +35,12 @@
         that = this;
         parser = new xml.Parser();
         parser.on("end", function(result) {
-          var definition, each, i, key, object, pos, sum, _i, _j, _len, _len1;
+          var definition, key, object, pos, sum, _j, _k, _len1, _len2;
           sum = "";
           definition = result["dict"]["acceptation"];
           pos = result["dict"]["pos"];
-          if (definition !== void 0) {
-            for (i = _i = 0, _len = definition.length; _i < _len; i = ++_i) {
+          if (definition && pos !== void 0) {
+            for (i = _j = 0, _len1 = definition.length; _j < _len1; i = ++_j) {
               each = definition[i];
               if (typeof pos[i] === "string") {
                 sum += pos[i].replace(/^\s*|\s*$/g, "");
@@ -51,16 +55,16 @@
           object["definition"] = sum;
           counter++;
           if (counter === words.length) {
-            for (_j = 0, _len1 = words2.length; _j < _len1; _j++) {
-              each = words2[_j];
+            for (_k = 0, _len2 = words2.length; _k < _len2; _k++) {
+              each = words2[_k];
               each["definition"] = referencetable[each["name"]]["definition"];
               tmpwords.push(each);
             }
             return that.emit("end", tmpwords);
           }
         });
-        for (_i = 0, _len = words.length; _i < _len; _i++) {
-          each = words[_i];
+        for (_j = 0, _len1 = words.length; _j < _len1; _j++) {
+          each = words[_j];
           word = each.name;
           options = {
             host: 'dict-co.iciba.com',

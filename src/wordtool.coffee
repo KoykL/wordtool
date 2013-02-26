@@ -101,11 +101,12 @@ mp.on("end", (data) ->
 	for eachword, i in data
 		words[i] = new Object()
 		words[i]["name"] = eachword
+	if argv.debug
+		console.log("raw: ")
+		console.log(words)
 	wp = new wordprocessor()
 	wp.on("end", ()->
 		if argv.debug
-			console.log("raw: ")
-			console.log(words)
 			console.log("Word processor result:")
 			console.log(wp.getresult())
 			fs.writeFileSync("debug-data", JSON.stringify(wp.getresult()), "utf8")

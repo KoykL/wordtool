@@ -8,6 +8,8 @@ class processword extends events
 		if argv["argv"]["with-definition"]
 			if not argv["stripedcomments"]
 				words = stripcomments.stripcomments(iwords)
+			for each, i in words
+				words[i]["name"] = each["name"].toLocaleLowerCase()
 			referencetable = flattern(words)
 			words2 = iwords
 			#console.log(words)
@@ -20,7 +22,7 @@ class processword extends events
 				#console.log(result)
 				definition = result["dict"]["acceptation"]
 				pos = result["dict"]["pos"]
-				if definition isnt undefined
+				if definition and pos isnt undefined
 					for each, i in definition
 						if typeof(pos[i]) is "string"
 							sum += pos[i].replace(/^\s*|\s*$/g, "")
