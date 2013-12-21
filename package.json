@@ -4,6 +4,10 @@
   "description": "ERROR: No README.md file found!",
   "main": "wordtool.js",
   "dependencies": {
+	"coffee-script":">=1.6.3",
+	"lazylines":">=1.0.0",
+	"xml2js":">=0.4.0",
+	"optimist":">=0.6.0"
 			},
   "repository": "",
   "keywords": [

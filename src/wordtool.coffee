@@ -1,17 +1,14 @@
-optimist = require('./optimist/index')
+optimist = require('optimist')
 path = require("path")
 wordloader = require('./wordloader').wordloader
 wordprocessor = require("./wordprocessor/main").wordprocessor
 outputter = require("./outputter").outputter
 fs = require("fs")
-class checkforseparateddefinition 
-	call: (arg) ->
+checkforseparateddefinition = (arg) ->
 	#console.log(arg)
-		if arg["separated-definition"] && !arg["with-definition"]
-			return false
-		else return true
-	toString: ()->
-		'You cannot enable "separated-definition" without enable "with-definition" first.'
+	if arg["separated-definition"] && !arg["with-definition"]
+		throw 'You cannot enable "separated-definition" without enable "with-definition" first.'
+	else return true
 argv = optimist
 	.usage("A handy tool helps you to deal with new words.\nUsage: $0\nYou can use --no-[option] to diable an option if it is enabled by default.\n")
 	.boolean("with-index")
@@ -71,7 +68,7 @@ argv = optimist
 	.string("data")
 	.default("data", "data")
 	.describe("data", "Specify where the data file.")
-	.check(new checkforseparateddefinition)
+	.check(checkforseparateddefinition)
 	.argv
 option = 
 	argv: argv

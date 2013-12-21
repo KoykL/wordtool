@@ -45,7 +45,7 @@ class processword extends events
 				options =
 						host: 'dict-co.iciba.com',
 						port: 80,
-						path: "/api/dictionary.php?w=#{word}"
+						path: "/api/dictionary.php?w=#{word}&key=01C57073FFB5472B45411DF15B827A11"
 						
 				http.get(options, (res)->
 					res.setEncoding("utf8")

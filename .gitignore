@@ -163,6 +163,7 @@ pip-log.txt
 .DS_Store
 
 # node js
+node_modules
 *.txt
 
 #temp
