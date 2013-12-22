@@ -16,19 +16,18 @@ class processword extends events
 			tmpwords = []
 			counter = 0
 			that = this
-			parser = new xml.Parser()
+			parser = new xml.Parser({strict:false})
 			parser.on("end", (result)->
 				sum = ""
-				#console.log(result)
-				definition = result["dict"]["acceptation"]
-				pos = result["dict"]["pos"]
+				definition = result["DICT"]["ACCEPTATION"]
+				pos = result["DICT"]["POS"]
 				if definition and pos isnt undefined
 					for each, i in definition
 						if typeof(pos[i]) is "string"
 							sum += pos[i].replace(/^\s*|\s*$/g, "")
 						sum += each.replace(/^\s*|\s*$/g, "")
 				else sum = "Unknown"
-				key = result["dict"]["key"][0]
+				key = result["DICT"]["KEY"][0]
 				object = referencetable[key]
 				object["definition"] = sum
 				counter++

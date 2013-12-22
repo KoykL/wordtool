@@ -8,7 +8,7 @@ class wordprocessor extends events
 	process: (wordsinput, argv)->
 		@words = wordsinput
 		plugindir = fs.readdirSync("#{__dirname}/plugins")
-		plugins = (plugin for plugin in plugindir when plugin.slice(-3) is ".js")
+		plugins = (plugin for plugin in plugindir when plugin.slice(-7) is ".coffee")
 		@scriptcount = 0
 		that = this
 		#this.emit("end")

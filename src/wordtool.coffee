@@ -6,11 +6,16 @@ outputter = require("./outputter").outputter
 fs = require("fs")
 checkforseparateddefinition = (arg) ->
 	#console.log(arg)
+	if arg._.length < 1
+		throw "You need to specify the file(s) that contain words and is(are) needed to be processed.\n"
+	else return true
+checkforspecifiedfile = (arg) ->
+	#console.log(arg)
 	if arg["separated-definition"] && !arg["with-definition"]
 		throw 'You cannot enable "separated-definition" without enable "with-definition" first.'
 	else return true
 argv = optimist
-	.usage("A handy tool helps you to deal with new words.\nUsage: $0\nYou can use --no-[option] to diable an option if it is enabled by default.\n")
+	.usage("A handy tool helps you to deal with new words.\n\nUsage: $0 [options] [start file number]-[end file number]\nYou can use --no-[option] to disable an option if it is enabled by default.\n")
 	.boolean("with-index")
 	.describe("with-index", "Give each word an index number.")
 	.boolean("strip-comments")
@@ -63,20 +68,11 @@ argv = optimist
 			alias: "p"
 			default: false
 			)
-
-
-	.string("data")
-	.default("data", "data")
-	.describe("data", "Specify where the data file.")
 	.check(checkforseparateddefinition)
+	.check(checkforspecifiedfile)
 	.argv
 option = 
 	argv: argv
-if argv._.length < 1
-	if argv.help
-		console.log(optimist.help())
-	else
-		console.log("You need to specify the file(s) that contain words and is(are) needed to be processed.\n\n#{optimist.help()}")
 filewithext=[]
 for file in argv._
 	pos1 = file.indexOf("-")
@@ -90,8 +86,7 @@ option["inputfile"] =  "#{argv._.join()}.txt"
 inputdir = argv.inputdir
 inputdir += "/"
 inputdir = path.normalize(inputdir)
-#console.log(inputdir)
-mp=new wordloader(inputdir, filewithext)
+mp=new wordloader("#{inputdir}#{file}" for file in filewithext)
 mp.on("end", (data) ->
 	#console.log(data)
 	words=[]
