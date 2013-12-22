@@ -3,15 +3,17 @@ path = require("path")
 ll = require("lazylines")
 events = require("events")
 class wordloader extends events.EventEmitter
-	constructor: (FileLists) ->
+	constructor: (FileList) ->
 		#filesunderpath = fs.readdirSync(path)
 		#filewithword =£¨file for file in filesunderpath when /.+\.txt/file
+		@fileList=fileList
+	process: ()->
 		@texts = []
 		count=0
 		@endcount = 0
 		tmpholder = []
 		that = this
-		for file in FileLists
+		for file in @FileList
 			fd = fs.createReadStream("#{file}", 
 									flags: 'r'
 									encodeing: "utf8"
@@ -26,7 +28,7 @@ class wordloader extends events.EventEmitter
 			inp.on("line", makecallback(count))
 			count++
 			inp.on("end", ()->
-						if that.endcount >= FileLists.length - 1
+						if that.endcount >= @FileList.length - 1
 							for tmp in tmpholder
 								for word in tmp
 									that.texts.push(word)

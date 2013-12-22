@@ -113,5 +113,6 @@ mp.on("end", (data) ->
 	wp.process(words, option)
 	
 )
+mp.process()
 	
 		
