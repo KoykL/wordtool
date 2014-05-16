@@ -37,7 +37,7 @@ argv = optimist
 	.default("help", false)
 	.describe("help", "Print out this help.")
 	.alias("outputdir", "o")
-	.default("outputdir", "./")
+	.default("outputdir", "")
 	.describe("outputdir", "Specify the output directory. This defaults to inputdir when not being specified.")
 	.alias("inputdir", "e")
 	.default("inputdir", "./")
