@@ -102,7 +102,7 @@ mp.on("end", (data) ->
 			console.log("Word processor result:")
 			console.log(wp.getresult())
 			fs.writeFileSync("debug-data", JSON.stringify(wp.getresult()), "utf8")
-		if option["argv"]["outputdir"] == "./"
+		if option["argv"]["outputdir"] == ""
 			option["argv"]["outputdir"] = option["argv"]["inputdir"]
 		output = new outputter()
 		output.on("end", (x)->
