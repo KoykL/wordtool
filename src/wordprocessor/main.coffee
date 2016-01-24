@@ -24,10 +24,12 @@ class wordprocessor extends events
 				#console.log(data)
 				if data isnt undefined
 					#console.log("returned")
-					
+
 					that.words = data
 					#console.log(data)
 				that.scriptcount++
+				console.log(that.scriptcount)
+				console.log(plugins.length)
 				that.emit("end") if that.scriptcount is plugins.length
 				)
 			tmpwords = @words

@@ -1,2 +1,3 @@
-require("coffee-script")
+c = require("coffee-script")
+c.register()
 require("./src/wordtool")
